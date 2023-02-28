@@ -42,11 +42,12 @@
 
 
                 var errorArray = [];
-                if (patt_email.test(email) == false)
-                    errorArray.push("Account does not exist");
 
                 if (mk1.length < 6 || mk1.length > 20)
                     errorArray.push("Password length must be from 6 to 20 characters");
+
+                if (patt_email.test(email) == false)
+                    errorArray.push("Email is valid");
 
                 var errorMessage = document.getElementById("txtError");
                 if (errorArray.length != 0) //khong co loi xay ra

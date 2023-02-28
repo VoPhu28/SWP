@@ -21,7 +21,7 @@ public class DBConnections {
         if (conn == null) {
             try {
                 Class.forName("com.mysql.jdbc.Driver");
-                String url = "jdbc:mysql://localhost:3306/db_vegetable_store";
+                String url = "jdbc:mysql://localhost:3306/db_vegetable_store";             
                 try {
                     conn = DriverManager.getConnection(url, "root", "");
                 } catch (SQLException ex) {

@@ -33,7 +33,7 @@
         <!-- <link href="css/style.css" rel="stylesheet"> -->
         <script type="text/javascript">
             var patt_email = /^[a-zA-Z]+\w*([.-_]\w+)*\@[a-zA-Z]+\w*([.-_]\w+)*(\.\w+)+$/;
-            var patt_phone = /^0[1-9]\d{8,10}$/;
+            var patt_phone = /^0[1-9]\d{8,10}$/; // regex
 
             var errorArray = [];
 
@@ -80,7 +80,7 @@
                 </div>
             </div>
             <!-- Spinner End -->
-             <%
+            <%
                 if (session.getAttribute("admin") == null) {
                     response.sendRedirect(request.getContextPath() + "/account/login");
                 }
@@ -108,14 +108,14 @@
                             <%
                                 }
                             %>
-                             <p class="error" id="txtError"></p> 
+                            <p class="error" id="txtError"></p> 
                             <form action="AccountController" method="post"  onsubmit = "return checkAllData()">
                                 <div class="form-floating mb-3">
                                     <input type="hidden" name="id" class="form-control" id="floatingText" readonly value="<%= id_customer%>"">
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingText">Full name</label>
-                                    <input type="text" name="full_name" class="form-control" id="floatingText" placeholder="Thai" ">
+                                    <input type="text" name="full_name" class="form-control" id="floatingText" placeholder="" ">
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingInput">Email address</label>
@@ -140,10 +140,10 @@
                                 </div>
                                 <button type="submit" name="btn_insert_staff" value="Sign Up" class="btn btn-primary py-3 w-100 mb-4">Add staff</button>
                             </form>
-                           
-                            
+
+
                         </div>
-                         
+
                     </div>
                 </div>
             </div>

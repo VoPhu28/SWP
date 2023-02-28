@@ -74,7 +74,6 @@ public class AccountDAO {
         return count;
     }
 
-    
     public int CountCustomer() {
         int count = 0;
         String query = "SELECT * FROM account";
@@ -93,8 +92,8 @@ public class AccountDAO {
 
         return count;
     }
-    
-       public int CountStaff() {
+
+    public int CountStaff() {
         int count = 0;
         String query = "SELECT * FROM account";
         PreparedStatement pst;
@@ -138,7 +137,7 @@ public class AccountDAO {
             pst.setString(1, acc.getPassword());
             pst.setString(2, acc.getRole_id());
             pst.setString(3, acc.getEmail());
-            count  = pst.executeUpdate();
+            count = pst.executeUpdate();
         } catch (SQLException ex) {
             Logger.getLogger(AccountDAO.class.getName()).log(Level.SEVERE, null, ex);
         }

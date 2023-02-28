@@ -23,31 +23,7 @@ import jakarta.servlet.http.HttpSession;
  */
 public class AccountControllers extends HttpServlet {
 
-    /**
-     * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
-     * methods.
-     *
-     * @param request servlet request
-     * @param response servlet response
-     * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
-     */
-    protected void processRequest(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-        response.setContentType("text/html;charset=UTF-8");
-        try ( PrintWriter out = response.getWriter()) {
-            /* TODO output your page here. You may use following sample code. */
-            out.println("<!DOCTYPE html>");
-            out.println("<html>");
-            out.println("<head>");
-            out.println("<title>Servlet AccountControllers</title>");
-            out.println("</head>");
-            out.println("<body>");
-            out.println("<h1>Servlet AccountControllers at " + request.getContextPath() + "</h1>");
-            out.println("</body>");
-            out.println("</html>");
-        }
-    }
+
 
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
     /**
@@ -153,7 +129,7 @@ public class AccountControllers extends HttpServlet {
                     }
                 } else if (acc.getRole_id().equals("admin")) {
                     if (acc.getPassword().equals(password)) {
-                        
+
                         if (request.getParameter("remember_me") != null) {
                             Cookie pass = new Cookie("pass", acc.getPassword());
                             Cookie user = new Cookie("user", acc.getEmail());
@@ -179,7 +155,7 @@ public class AccountControllers extends HttpServlet {
                             response.addCookie(pass);
                         }
                         session.setAttribute("login_done", "staff");
-                        session.setAttribute("name_1", acc.getEmail());
+                        session.setAttribute("name", acc.getEmail());
                         response.sendRedirect(request.getContextPath() + "/login/staff");
                     } else {
                         response.sendRedirect(request.getContextPath() + "/account/login?fail=1");

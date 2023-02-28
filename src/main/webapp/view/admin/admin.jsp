@@ -94,7 +94,7 @@
                         <div class="col-md-3">
                             <div class="p-3 bg-white shadow-sm d-flex justify-content-around align-items-center rounded">
                                 <div>
-                                    <h3 class="fs-2"><%= countStaff %></h3>
+                                    <h3 class="fs-2"><%= countStaff%></h3>
                                     <p class="fs-5">Staff</p>
                                 </div>
                                 <i class="fas fa-user me-2 fs-1 primary-text border rounded-full secondary-bg p-3"></i>

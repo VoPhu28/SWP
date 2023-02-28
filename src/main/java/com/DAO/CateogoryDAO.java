@@ -5,6 +5,7 @@
 package com.DAO;
 
 import com.connections.DBConnections;
+import com.models.Category;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -37,6 +38,43 @@ public class CateogoryDAO {
         
         
         return resultSet;
+    }
+    
+   public Category getCategoryByID(String id){
+       Category c =  null;
+       
+        String query = "SELECT * FROM product_category WHERE catagory_id=?";
+        
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, id);
+            ResultSet s = pst.executeQuery();
+            if (s.next()) {
+                // catagory_id,category_name
+                c = new Category(s.getString("catagory_id"), s.getString("category_name"),s.getString("image") );
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(CateogoryDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return c;
+   }
+   
+     public int countCategory(){
+        int count = 0;
+        String query = "SELECT * FROM product_category";
+        
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {                
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        return count;
     }
     
     

@@ -1,5 +1,3 @@
-
-
 <%@page import="com.models.GenerateID"%>
 <%@page import="java.sql.ResultSet"%>
 <%@page import="com.DAO.CateogoryDAO"%>
@@ -52,7 +50,7 @@
                     errorArray.push("Product name can't be empty");
                 if (desc == "")
                     errorArray.push("Description can't be empty");
-                if (patt_phone.test(quantity) ==    false)
+                if (patt_phone.test(quantity) == false)
                     errorArray.push("Quantity  is invalid");
                 if (patt_phone.test(price) == false)
                     errorArray.push("Price  is invalid");
@@ -100,19 +98,18 @@
 
                             </div>
                             <%
-                            
                                 GenerateID generateID = new GenerateID();
                                 String id = generateID.generateProduct();
                             %>
-                           
+
                             <p class="error" id="txtError"></p> 
                             <form action="AdminController" method="post" enctype="multipart/form-data" onsubmit = "return checkAllData()">
                                 <div class="form-floating mb-3">
-                                    <input type="hidden" name="id" value="<%= id %>"  class="form-control" id="floatingText" />
+                                    <input type="hidden" name="id" value="<%= id%>"  class="form-control" id="floatingText" />
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="product">Product name</label>
-                                    <input type="text" name="product_name" class="form-control" id="product"  placeholder="Vo Dang Hong Phu" />
+                                    <input type="text" name="product_name" class="form-control" id="product"  placeholder="" />
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingInput">Description</label>

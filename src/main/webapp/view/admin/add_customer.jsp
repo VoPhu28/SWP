@@ -115,7 +115,7 @@
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingText">Full name</label>
-                                    <input type="text" name="full_name" class="form-control" id="floatingText" placeholder="Thai" ">
+                                    <input type="text" name="full_name" class="form-control" id="floatingText" placeholder="" ">
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingInput">Email address</label>
@@ -140,7 +140,7 @@
                                 </div>
                                 <button type="submit" name="btn_insert_customer" value="Sign Up" class="btn btn-primary py-3 w-100 mb-4">Add customer</button>
                             </form>
-                           
+
 
                         </div>
 

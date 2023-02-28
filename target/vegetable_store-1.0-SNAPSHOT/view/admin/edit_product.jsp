@@ -111,7 +111,7 @@
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="product">Product name</label>
-                                    <input type="text" name="product_name" class="form-control" id="product" value="<%= p.getProduct_name()%>"  placeholder="Thai" ">
+                                    <input type="text" name="product_name" class="form-control" id="product" value="<%= p.getProduct_name()%>"  placeholder="" ">
                                 </div>
                                 <div class="form-floating mb-3">
                                     <label for="floatingInput">Description</label>
@@ -129,7 +129,7 @@
                                 <div class="form-floating mb-3">
                                     <label for="floatingImage">Image</label>
                                     <input type="file" name="image" class="form-control"  id="floatingImage" >
-                                    <input type="hidden" name="image1" value="<%= p.getImage() %>">
+                                    <input type="hidden" name="image1" value="<%= p.getImage()%>">
                                 </div>
                                 <div class="form-floating mb-3">
                                     <select class="form-select" id="floatingSelect" name="role"

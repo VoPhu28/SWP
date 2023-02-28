@@ -66,7 +66,8 @@ public class AdminController extends HttpServlet {
             RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/add_product.jsp");
             dispatcher.forward(request, response);
         } else if (path.endsWith("/manage/product/addcategory")) {
-            out.print("Add category");
+            RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/add_category.jsp");
+            dispatcher.forward(request, response);
         } else {
             /*
             Customer update and delete
@@ -135,7 +136,14 @@ public class AdminController extends HttpServlet {
                 RequestDispatcher dispatcher = request.getRequestDispatcher("/view/admin/edit_category.jsp");
                 dispatcher.forward(request, response);
             } else if (path.startsWith("/admin/manage/product/deletecategory")) {
-
+                String id = request.getParameter("id");
+                ProductDAO pdao = new ProductDAO();
+                int check = pdao.deleteCategory(id);
+                if (check != 0) {
+                    response.sendRedirect(request.getContextPath() + "/admin/manage/product?success=2");
+                } else {
+                    response.sendRedirect(request.getContextPath() + "/admin/manage/product?fail=2");
+                }
             }
         }
     }
@@ -259,17 +267,17 @@ public class AdminController extends HttpServlet {
             User cus = new User(id, full_name, email, phone, address);
             UserDAO cdao = new UserDAO();
             AccountDAO accountDAO = new AccountDAO();
-            out.print(email);
+
             if (!accountDAO.checkAccountExits(email)) {
                 int check = accountDAO.InsertAccount(acc);
-                if (check != 0) {
+                if (check != 0) { // add dã thành công hay chua
                     check = cdao.InsertUserInfor(cus);
-                    if (check != 0) {
+                    if (check != 0) { //  add user information thanh cong
                         response.sendRedirect(request.getContextPath() + "/admin/manage/staff?add_staff=1");
-                    } else {
+                    } else { // add user that bai
                         response.sendRedirect(request.getContextPath() + "/admin/manage/staff?add_staff_fail=1");
                     }
-                } else {
+                } else { // chua thanh cong
                     response.sendRedirect(request.getContextPath() + "/admin/manage/staff?add_staff_fail=1");
                 }
             } else {
@@ -291,9 +299,9 @@ public class AdminController extends HttpServlet {
             if (fileName.equals("")) {
                 fileName = request.getParameter("image1");
             } else {
-                String filePath = "D:\\Netbeans\\vegetable-store-main\\vegetable_store\\src\\main\\webapp\\img\\product\\" + fileName;
+                String filePath = "D:\\Netbeans\\vegetable_store\\src\\main\\webapp\\img\\product\\" + fileName;
                 filePart.write(filePath);
-                
+
             }
             Product p = new Product(product_id, product_name, Float.valueOf(selling_price), category_id,
                     product_desc, Integer.valueOf(quantity), fileName);
@@ -316,7 +324,7 @@ public class AdminController extends HttpServlet {
             quantity = request.getParameter("quantity");
             Part filePart = request.getPart("image");
             String fileName = filePart.getSubmittedFileName(); // tên file
-            String filePath = "D:\\Netbeans\\vegetable-store-main\\vegetable_store\\src\\main\\webapp\\img\\product\\" + fileName;
+            String filePath = "D:\\Netbeans\\vegetable_store\\src\\main\\webapp\\img\\product\\" + fileName;
             filePart.write(filePath);
             ProductDAO dAO = new ProductDAO();
             Product p = new Product(product_id, product_name, Float.valueOf(selling_price), category_id,
@@ -332,11 +340,42 @@ public class AdminController extends HttpServlet {
 
         // category
         if (request.getParameter("btn_update_category") != null) {
+            String id, name;
+            id = request.getParameter("id");
+            name = request.getParameter("name");
+            ProductDAO dAO = new ProductDAO();
+            Part filePart = request.getPart("image");
+            String fileName = filePart.getSubmittedFileName();
+            if (fileName.equals("")) {
+                fileName = request.getParameter("image1");
+            } else {
+                String filePath = "D:\\Netbeans\\vegetable_store\\src\\main\\webapp\\img\\product\\" + fileName;
+                filePart.write(filePath);
 
+            }
+            int check = dAO.UpdateCategory(id, name,fileName);
+           if (check != 0) {
+                response.sendRedirect(request.getContextPath() + "/admin/manage/product?update_category=1");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/manage/product?update_category_fail=1");
+            }
         }
 
         if (request.getParameter("btn_insert_category") != null) {
-
+            String id, name,image;
+            id = request.getParameter("id");
+            name = request.getParameter("name");
+            Part filePart = request.getPart("image");
+            String fileName = filePart.getSubmittedFileName(); // tên file
+            String filePath = "D:\\Netbeans\\vegetable_store\\src\\main\\webapp\\img\\categories\\" + fileName;
+            filePart.write(filePath);
+            ProductDAO dAO = new ProductDAO();
+            int check = dAO.addCategory(id, name,fileName);
+            if (check != 0) {
+                response.sendRedirect(request.getContextPath() + "/admin/manage/product?add_category=1");
+            } else {
+                response.sendRedirect(request.getContextPath() + "/admin/manage/product?add_category_fail=1");
+            }
         }
     }
 

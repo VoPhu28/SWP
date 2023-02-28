@@ -6,7 +6,7 @@ package com.models;
 
 /**
  *
- * @author thaiq
+ * @author
  */
 public class User {
     private String user_id;

@@ -10,6 +10,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,6 +40,23 @@ public class ProductDAO {
         }
         return resultSet;
 
+    }
+
+    public ResultSet getAllProductByCategory(String category_id) {
+        ResultSet resultSet = null;
+        String query = "SELECT * FROM `product`"
+                + "LEFT OUTER JOIN product_category "
+                + "ON product.category_id = product_category.catagory_id "
+                + "WHERE product_category.catagory_id=?";
+        PreparedStatement pst;
+        try {
+            pst = conn.prepareStatement(query);
+            pst.setString(1, category_id);
+            resultSet = pst.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return resultSet;
     }
 
     public String usingSubstringMethod(String text, int length) {
@@ -121,12 +139,28 @@ public class ProductDAO {
 
         return count;
     }
-    
-    
-    public int deleteProduct(String product_id){
+
+    public int countProduct() {
+        int count = 0;
+        String query = "SELECT * FROM product";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            ResultSet rs = pst.executeQuery();
+            while (rs.next()) {
+                count++;
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+    }
+
+    public int deleteProduct(String product_id) {
         int count = 0;
         String query = "DELETE FROM product WHERE product_id=?";
-        
+
         try {
             PreparedStatement pst = conn.prepareStatement(query);
             pst.setString(1, product_id);
@@ -134,8 +168,105 @@ public class ProductDAO {
         } catch (SQLException ex) {
             Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
         return count;
     }
+
+    public int deleteCategory(String category_id) {
+        int count = 0;
+        String query = "DELETE FROM product_category WHERE catagory_id=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, category_id);
+            count = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return count;
+    }
+
+    public int addCategory(String id, String name, String image) {
+        int count = 0;
+
+        String query = "INSERT INTO product_category "
+                + "(catagory_id,category_name,image) VALUES (?,?,?)";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, id);
+            pst.setString(2, name);
+            pst.setString(3, image);
+            count = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
+    }
+
+    public int UpdateCategory(String id, String name, String image) {
+        int count = 0;
+
+        String query = "UPDATE product_category SET "
+                + "category_name=? , image=? WHERE catagory_id=?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setString(1, name);
+            pst.setString(2, image);
+            pst.setString(3, id);
+            count = pst.executeUpdate();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return count;
+    }
+
+    public ResultSet getAllCategory() {
+        ResultSet rs = null;
+        String query = "SELECT * FROM product_category";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            rs = pst.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+
+    public boolean checkIDCategory(String id) {
+
+        try {
+            PreparedStatement pst = conn.prepareStatement("SELECT * FROM product_category WHERE catagory_id=?");
+            pst.setString(1, id);
+            ResultSet rs = pst.executeQuery();
+            if (rs.next()) {
+                return false;
+            }
+
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        return true;
+    }
+
+    public ResultSet getProductByPrice(float min, float max) {
+        ResultSet rs = null;
+        String query = "SELECT * FROM `product` WHERE product.selling_price >= ? AND selling_price <= ?";
+
+        try {
+            PreparedStatement pst = conn.prepareStatement(query);
+            pst.setFloat(1, min);
+            pst.setFloat(2, max);
+            rs = pst.executeQuery();
+        } catch (SQLException ex) {
+            Logger.getLogger(ProductDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return rs;
+    }
+   
 
 }
